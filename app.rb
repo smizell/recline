@@ -1,7 +1,7 @@
 require 'sinatra'
 
-require './recline'
-require './task_resources'
+require './lib/recline'
+require './resources/task_resources'
 
 # Register your resources here. This makes your resources
 # very modular since you can just require and register a
