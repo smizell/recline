@@ -34,7 +34,7 @@ end
 # methods for each.
 #
 # A better way to do this might be to check to see if a
-# resource supports a resource, either by having a method
+# resource supports a method, either by having a method
 # on the class that is the name of the HTTP method (such as `get`
 # like in my examples) or listed in the @methods attribute
 # as an alias (to allow you to map `get` to `show`).
