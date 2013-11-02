@@ -10,12 +10,17 @@ TASKS = [
   },
   {
     id: 2,
+    task: "Refrigerate Milk",
+    completed: false
+  },
+  {
+    id: 3,
     task: "Drink milk",
     completed: false
   },
   {
-    id: 2,
-    task: "Refrigerate Milk",
+    id: 4,
+    task: "Throw Milk Jug Away",
     completed: false
   }
 ]
@@ -26,6 +31,11 @@ TASKS = [
 def to_boolean(string)
   string == 'true'
 end
+
+# This is a resource that is a collection of Tasks. If
+# this was a complete example, it would return a list of
+# TaskResource representations, but for now, it is only
+# return JSON.
 
 class TasksResource < BaseResource
 
@@ -55,7 +65,7 @@ class TasksResource < BaseResource
     # I know there is the respond_with contrib library
     # that could be used for this. Right now, this is just
     # here for example.
-    @representations = [:html, :json]
+    @representations = [:json]
   end
 
   # This is called first whenever the :default URL is
@@ -95,5 +105,34 @@ class TasksResource < BaseResource
     #
     # filter(request, params)
     @tasks.to_json
+  end
+end
+
+# This is a resource for one Task.
+
+class TaskResource < BaseResource
+
+  def initialize
+    @name = 'r:task'
+
+    @urls = {
+      :default => '/tasks/:id'
+    }
+
+    @methods = {
+      :get => 'get'
+    }
+
+    @representations = [:json]
+  end
+
+  def default(request, params)
+    @task = TASKS.detect do |task|
+      task[:id] == params[:id].to_i
+    end
+  end 
+
+  def get(request, params)
+    @task.to_json
   end
 end

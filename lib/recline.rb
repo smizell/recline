@@ -31,7 +31,13 @@ end
 
 # Registers the resource with the proper URLs and methods
 # It first loops through the URLs, then creates the available
-# methods for each. 
+# methods for each.
+#
+# A better way to do this might be to check to see if a
+# resource supports a resource, either by having a method
+# on the class that is the name of the HTTP method (such as `get`
+# like in my examples) or listed in the @methods attribute
+# as an alias (to allow you to map `get` to `show`).
 
 def register_resource(resource)
   base = resource.new
@@ -43,6 +49,9 @@ def register_resource(resource)
       case http_method
       when :get
         get url do
+          # Just supporting json for this example. Content negotiation
+          # would need to be done somewhere in this library
+          content_type 'application/json'
           return base.url(url_name, resource_method, request, params)
         end
       end

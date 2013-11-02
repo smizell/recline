@@ -8,6 +8,7 @@ require './resources/task_resources'
 # resource in any application you build.
 
 register_resource(TasksResource)
+register_resource(TaskResource)
 
 
 
